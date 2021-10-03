@@ -4,8 +4,6 @@
 
 package edu.neu.coe.csye7200.lab99.scala99
 
-import edu.neu.coe.csye7200.lab99.scala99.P01.last
-
 import scala.annotation.tailrec
 
 object P00 {
@@ -31,9 +29,9 @@ object P01 {
 
   @scala.annotation.tailrec
   def last[X](xs: List[X]): X = xs match {
-    case h :: Nil  => h
+    case m :: Nil  => m
     case _ :: tail => last(tail)
-    case _         => throw new NoSuchElementException
+    case _     => throw new NoSuchElementException
   }
 
 }
@@ -44,7 +42,7 @@ object P02 {
   def penultimate[X](xs: List[X]): X = xs match {
     case h ::_:: Nil  => h
     case _ :: tail => penultimate(tail)
-    case _         => throw new NoSuchElementException
+    case Nil         => throw new NoSuchElementException
   }
 }
 
@@ -78,6 +76,7 @@ object P05 {
 
   def reverse[X](xs: List[X]): List[X] = {
     // TO BE IMPLEMENTED
+    @tailrec
     def reverseR(result: List[X], curList: List[X]): List[X] = curList match {
       case Nil       => result
       case h :: tail => reverseR(h :: result, tail)
@@ -89,7 +88,7 @@ object P05 {
 object P06 {
 
   // inefficient solution
-  def isPalindrome[X](xs: List[X]): Boolean = (xs==xs.reverse) // TO BE IMPLEMENTED
+  def isPalindrome[X](xs: List[X]): Boolean = xs==xs.reverse // TO BE IMPLEMENTED
 }
 
 object P07 {
@@ -105,8 +104,12 @@ object P07 {
 object P08 {
 
   def compress[X](xs: List[X]): List[X] = {
-    // TO BE IMPLEMENTED
-    ???
+    @tailrec
+    def compressR(result: List[X], curList: List[X]): List[X] = curList match {
+      case h :: tail => compressR(h :: result, tail.dropWhile(_ == h))
+      case Nil       => result.reverse
+    }
+    compressR(Nil, xs)
   }
 }
 
@@ -114,7 +117,7 @@ object P09 {
 
   def pack[X](xs: List[X]): List[List[X]] = {
     // TO BE IMPLEMENTED
-    if (xs.isEmpty) List(List())
+    if (xs.isEmpty) List()
     else {
       val (packed, next) = xs span { _ == xs.head }
       if (next == Nil) List(packed)
@@ -151,18 +154,21 @@ object P13 {
     }
   }
 
-  object P14 {
 
-    def duplicate[X](xs: List[X]): List[X] = xs flatMap { e => List(e, e) }
-  }
 
-  object P15 {
 
-    def duplicateN[X](n: Int, xs: List[X]): List[X] = {
-      // TO BE IMPLEMENTED
-      xs flatMap {
-        List.fill(n)(_)
-      }
+}
+
+object P14 {
+
+  def duplicate[X](xs: List[X]): List[X] = xs flatMap { e => List(e, e) }
+}
+object P15 {
+
+  def duplicateN[X](n: Int, xs: List[X]): List[X] = {
+    // TO BE IMPLEMENTED
+    xs flatMap {
+      List.fill(n)(_)
     }
   }
 }

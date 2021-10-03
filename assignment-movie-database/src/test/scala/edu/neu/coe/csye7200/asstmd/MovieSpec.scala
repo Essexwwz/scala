@@ -64,12 +64,18 @@ class MovieSpec extends AnyFlatSpec with Matchers {
       case Rating("PG", Some(13)) =>
     }
   }
+
+
   it should "work for PG-13" in {
     val x = Rating("PG-13")
     x should matchPattern {
       case Rating("PG", Some(13)) =>
     }
   }
+
+
+
+
   it should "work for R" in {
     val x = Rating("R")
     x should matchPattern {

@@ -1,6 +1,10 @@
 package edu.neu.coe.csye7200.asstmd
 
+import edu.neu.coe.csye7200.asstmd.Name.rName
+
+import scala.collection.immutable.{AbstractSeq, LinearSeq}
 import scala.io.Source
+import scala.util.control.NonFatal
 import scala.util.Try
 
 /**
@@ -98,9 +102,14 @@ object Movie extends App {
       * @param w a line of input.
       * @return a Try[Movie]
       */
-    def parse(w: String): Try[Movie] = ??? // TO BE IMPLEMENTED
-  }
+    def parse(w: String): Try[Movie] ={
+      val ws = w.split(',').toSeq
 
+      Try(Movie.apply(ws))}
+
+     // TO BE IMPLEMENTED
+
+  }
   val ingester = new Ingest[Movie]()
   if (args.length > 0) {
     val source = Source.fromFile(args.head)
@@ -120,8 +129,11 @@ object Movie extends App {
     // Hint: form a new list which is consisted by the elements in list in position indices. Int* means array of Int.
     // 6 points
     val result: Seq[String] =
+      for {
+        x <- indices
+      } yield list(x)
     // TO BE IMPLEMENTED
-    ???
+
     result.toList
   }
 
@@ -201,7 +213,12 @@ object Rating {
     */
   // Hint: This should similar to apply method in Object Name. The parameter of apply in case match should be same as case class Rating
   // 13 points
-  def apply(s: String): Rating = ??? // TO BE IMPLEMENTED
+  def apply(s: String): Rating  = (for (ws <- rRating.unapplySeq(s)) yield for (w <- ws) yield Option(w))
+  match {
+    case Some(Seq(Some(code), _, Some(age))) => Rating(code, age.toIntOption)
+    case Some(Seq(Some(code), None, None))=> Rating(code, None)
+    case _ => throw ParseException(s"logic error in Rating: $s")
+  }// TO BE IMPLEMENTED
 
 }
 

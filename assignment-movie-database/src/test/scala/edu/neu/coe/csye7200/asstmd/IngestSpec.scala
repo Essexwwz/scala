@@ -22,7 +22,8 @@ class IngestSpec extends AnyFlatSpec with Matchers {
     val xys = ingester(source).toSeq
     // check that xys has exactly one element, consisting of Success(42) -- 10 points
     // TO BE IMPLEMENTED
-    ???
+    xys.length shouldBe 1
+    xys(0) shouldBe Success(42)
   }
 
   it should "work for movie database" in {
@@ -37,7 +38,9 @@ class IngestSpec extends AnyFlatSpec with Matchers {
         val mos = for (my <- mys) yield for (m <- my.toOption; if m.production.country == "New Zealand") yield m
         val ms = mos.flatten
         ms.size shouldBe 4
+
         ms foreach println
+
         source.close()
       case Failure(x) =>
         fail(x)
