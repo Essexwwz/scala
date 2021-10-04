@@ -5,7 +5,7 @@ import edu.neu.coe.csye7200.asstmd.Name.rName
 import scala.collection.immutable.{AbstractSeq, LinearSeq}
 import scala.io.Source
 import scala.util.control.NonFatal
-import scala.util.{Failure, Success, Try}
+import scala.util.Try
 
 /**
   * This class represents a Movie from the IMDB data file on Kaggle.
@@ -105,14 +105,7 @@ object Movie extends App {
     def parse(w: String): Try[Movie] ={
       val ws = w.split(",").toSeq
 
-      val xo = Try(Movie(ws))
-      xo match {
-        case Success(v) =>xo
-        case Failure(e) => throw e
-      }
-
-
-    }
+      Try(Movie.apply(ws))}
 
      // TO BE IMPLEMENTED
 
