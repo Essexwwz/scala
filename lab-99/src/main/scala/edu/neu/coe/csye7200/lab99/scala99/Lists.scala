@@ -76,14 +76,25 @@ object P05 {
 
   def reverse[X](xs: List[X]): List[X] = {
     // TO BE IMPLEMENTED
-    @tailrec
+    /*@tailrec
     def reverseR(result: List[X], curList: List[X]): List[X] = curList match {
       case Nil       => result
       case h :: tail => reverseR(h :: result, tail)
     }
     reverseR(Nil, xs)
+
+     */
+    def rr(result: List[X], clist : List[X]) : List[X] = clist match{
+      case Nil => result
+      case h :: tail => rr(h::result, tail)
+    }
+    rr(Nil, xs)
   }
 }
+
+
+
+
 
 object P06 {
 
@@ -92,6 +103,10 @@ object P06 {
 }
 
 object P07 {
+  val p: Array[Float] =[0.7f];
+  p match {
+    case  =>
+  }
 
   type ListAny = List[Any]
 
