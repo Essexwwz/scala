@@ -1,5 +1,7 @@
 package edu.neu.coe.csye7200.asstfc
 
+import edu.neu.coe.csye7200.asstfc.Movie.MoviesProtocol.jsonFormat4
+
 import scala.collection.mutable
 import scala.io.{Codec, Source}
 import scala.util._
@@ -102,7 +104,21 @@ object Movie extends App {
   object MoviesProtocol extends DefaultJsonProtocol {
     // 20 points
     // TO BE IMPLEMENTED
-    ???
+    implicit val nameFormat = jsonFormat4(Name.apply)
+
+    implicit val principalFormat = jsonFormat2(Principal.apply)
+
+    implicit val ratingFormat = jsonFormat2(Rating.apply)
+    implicit val reviewsFormat = jsonFormat7(Reviews.apply)
+
+    implicit val formatFormat = jsonFormat4(Format.apply)
+    implicit val productionFormat = jsonFormat4(Production.apply)
+    implicit val movieFormat = jsonFormat11(Movie.apply)
+
+
+
+
+
   }
 
   implicit object IngestibleMovie extends IngestibleMovie
@@ -123,7 +139,13 @@ object Movie extends App {
   def testSerializationAndDeserialization(ms: Seq[Movie]): Boolean = {
     // 5 points
     // TO BE IMPLEMENTED
-    ???
+    import MoviesProtocol._
+    for(m <- ms){
+      if (m.toJson.convertTo(movieFormat)!= m) {
+        return false
+      }
+    }
+    true
   }
 
   def getMoviesFromCountry(country: String, movies: Iterator[Try[Movie]]): Try[Seq[Movie]] = {
